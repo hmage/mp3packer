@@ -330,11 +330,11 @@ static unsigned int get_bits_slow(seq_string_t *s, int num_bits) {
 }
 
 static unsigned int get_bits_wordwise(seq_string_t *s, int num_bits) {
-	uint32 *int_ptr;
 	uint32 raw;
-	int_ptr = (uint32 *)s->byte_ptr;
 
-#if 1
+#if defined(__WIN32__) && !defined __CYGWIN__
+	uint32 *int_ptr;
+	int_ptr = (uint32 *)s->byte_ptr;
 	raw = _byteswap_ulong(*int_ptr) << s->bit_index;
 #else
 	raw = (
@@ -421,9 +421,6 @@ CAMLprim value mfh_decode_big_quants(
 	int out_off = Int_val(out_off_val);
 	int out_off_too_many = Int_val(out_off_too_many_val);
 	int ht = Int_val(ht_val);
-	const short *start_tab = mfh_tables[ht];
-	const short *tab;
-	short linbits = linbits_table[ht];
 	seq_string_t s;
 
 	CAMLlocal1(out_val);
@@ -643,8 +640,6 @@ CAMLprim value mfh_decode_count1_quants(
 	int out_off = Int_val(out_off_val);
 	int out_off_too_many = Int_val(out_off_too_many_val);
 	int ht = Int_val(ht_one_val);
-	const short *start_tab = (ht ? tab_c1 : tab_c0);
-	const short *tab;
 	int overboard = 0;
 	seq_string_t s;
 
