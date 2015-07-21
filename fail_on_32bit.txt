@@ -1,0 +1,6 @@
+(* This file will cause the compilation to abort if run under a 32-bit version of OCaml *)
+(* Since the maximum int for a 32-bit compile is 1_073_741_823, this will fail *)
+(* The max on a 64-bit system is 4_611_686_018_427_387_903, so this will compile fine *)
+
+ignore 5_000_000_000;;
+
