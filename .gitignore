@@ -1,1 +1,7 @@
 /.depend
+*.i
+*.o
+*.s
+*.cmi
+*.cmx
+/mp3packer
